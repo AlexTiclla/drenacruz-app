@@ -66,5 +66,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Requerimos acceso a tu cámara para que puedas tomar fotos de los puntos críticos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Requerimos acceso a tu galería para que puedas subir fotos de los puntos críticos.</string>
 </dict>
 </plist>
