@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
+import 'dart:io';
 
 class UploadPhotoScreen extends StatefulWidget {
   const UploadPhotoScreen({super.key});
@@ -204,8 +205,8 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                   ),
                 ),
                 
-                // Image Preview (Demo based on HTML)
-                if (_image != null || true) // Always showing for demo based on HTML
+                // Image Preview
+                if (_image != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0),
                     child: Column(
@@ -229,8 +230,8 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                               borderRadius: BorderRadius.circular(12),
                               child: AspectRatio(
                                 aspectRatio: 1.5,
-                                child: Image.network(
-                                  'https://lh3.googleusercontent.com/aida-public/AB6AXuCHhTQXGTD1A9LJiIRfpCLmzD7EmqzDlR2ibxWDJ11-xX9NWkM5JXzWBzTpxn46xpp-Z7fXf2X_71S6JGpfpOR8IrtlAU_6YiSmiEwbGzE9ZxDiRCod2BEiVlNvQSOsci50madIfKFyseQ-RtzLjIvWP27BCrA6TvGKtDHujlTUWO8XI0Pv4wJD8Ax0za9SCtdKx7fPmYfS-AOQDbfAMBLkd4ztZW3XFCBL-llDCLOWPuhba49vZStWK5K6IWaDOfbVPbKxnUsFR49v',
+                                child: Image.file(
+                                  File(_image!.path),
                                   fit: BoxFit.cover,
                                 ),
                               ),

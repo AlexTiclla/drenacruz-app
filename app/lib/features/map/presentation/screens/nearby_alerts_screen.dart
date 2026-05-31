@@ -208,15 +208,19 @@ class NearbyAlertsScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.notifications_active_outlined, color: textSub),
-                      SizedBox(width: 12),
-                      Text(
-                        'Activar notificaciones críticas',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textMain),
-                      ),
-                    ],
+                  Expanded(
+                    child: Row(
+                      children: const [
+                        Icon(Icons.notifications_active_outlined, color: textSub),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            'Activar notificaciones críticas',
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textMain),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Switch(
                     value: true,
@@ -284,19 +288,22 @@ class NearbyAlertsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Zona',
-                    style: TextStyle(fontSize: 12, color: textSub, fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    zona,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textMain),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Zona',
+                      style: TextStyle(fontSize: 12, color: textSub, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      zona,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textMain),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
@@ -453,7 +460,7 @@ class NearbyAlertsScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(icon: Icons.map_outlined, label: 'Mapa', isActive: false, onTap: () => context.go('/citizen/map')),
+            _buildNavItem(icon: Icons.map_outlined, label: 'Home', isActive: false, onTap: () => context.go('/citizen/map')),
             _buildNavItem(icon: Icons.add_circle_outline, label: 'Reportar', isActive: false, onTap: () => context.push('/citizen/report')),
             _buildNavItem(icon: Icons.notifications_active, label: 'Alertas', isActive: true, onTap: () {}),
             _buildNavItem(icon: Icons.assignment_outlined, label: 'Reportes', isActive: false, onTap: () => context.push('/citizen/my-reports')),

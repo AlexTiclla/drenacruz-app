@@ -181,7 +181,7 @@ Widget drenaPillButton({
 
 Widget drenaBottomNav(BuildContext context, {required int currentIndex}) {
   final items = [
-    ('Mapa', Icons.map_outlined, '/citizen/map'),
+    ('Home', Icons.map_outlined, '/citizen/map'),
     ('Reportar', Icons.add_circle_outline, '/citizen/report'),
     ('Alertas', Icons.notifications_active_outlined, '/citizen/alerts'),
     ('Reportes', Icons.assignment_outlined, '/citizen/my-reports'),

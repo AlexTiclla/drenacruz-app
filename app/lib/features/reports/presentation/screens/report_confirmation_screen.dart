@@ -242,7 +242,7 @@ class _ReportConfirmationScreenState extends State<ReportConfirmationScreen> wit
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      child: const Text('Volver al mapa'),
+                      child: const Text('Volver al inicio'),
                     ),
                     const SizedBox(height: 12),
                     TextButton(
@@ -278,7 +278,7 @@ class _ReportConfirmationScreenState extends State<ReportConfirmationScreen> wit
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(icon: Icons.map_outlined, label: 'Mapa', isActive: false, onTap: () => context.go('/citizen/map')),
+            _buildNavItem(icon: Icons.map_outlined, label: 'Home', isActive: false, onTap: () => context.go('/citizen/map')),
             _buildNavItem(icon: Icons.add_circle_outline, label: 'Reportar', isActive: false, onTap: () => context.push('/citizen/report')),
             _buildNavItem(icon: Icons.notifications_none, label: 'Alertas', isActive: false, onTap: () => context.push('/citizen/alerts')),
             _buildNavItem(icon: Icons.assessment, label: 'Reportes', isActive: true, onTap: () => context.push('/citizen/my-reports')),

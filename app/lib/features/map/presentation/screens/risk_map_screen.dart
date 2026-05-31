@@ -29,6 +29,7 @@ class _RiskMapScreenState extends State<RiskMapScreen> {
       body: Stack(
         children: [
           // Map Layer
+          /*
           Positioned.fill(
             child: GoogleMap(
               initialCameraPosition: _santaCruz,
@@ -36,6 +37,7 @@ class _RiskMapScreenState extends State<RiskMapScreen> {
               zoomControlsEnabled: false,
             ),
           ),
+          */
           
           // Top App Bar Area Overlay
           Positioned(
@@ -98,129 +100,129 @@ class _RiskMapScreenState extends State<RiskMapScreen> {
           ),
           
           // Alert Banner Overlay
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 70,
-            left: 16,
-            right: 16,
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFFBEB), // amber-50
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFEF3C7)), // amber-100
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(Icons.warning, color: riskMedium),
-                  const SizedBox(width: 12),
-                  const Expanded(
-                    child: Text(
-                      'Riesgo alto de anegamiento en tu zona durante las próximas 2 horas.',
-                      style: TextStyle(color: Color(0xFF78350F), fontSize: 13, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    child: const Icon(Icons.close, size: 18, color: Color(0xFF92400E)),
-                  )
-                ],
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: MediaQuery.of(context).padding.top + 70,
+          //   left: 16,
+          //   right: 16,
+          //   child: Container(
+          //     padding: const EdgeInsets.all(12),
+          //     decoration: BoxDecoration(
+          //       color: const Color(0xFFFFFBEB), // amber-50
+          //       borderRadius: BorderRadius.circular(12),
+          //       border: Border.all(color: const Color(0xFFFEF3C7)), // amber-100
+          //       boxShadow: [
+          //         BoxShadow(
+          //           color: Colors.black.withOpacity(0.05),
+          //           blurRadius: 4,
+          //           offset: const Offset(0, 2),
+          //         ),
+          //       ],
+          //     ),
+          //     child: Row(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         const Icon(Icons.warning, color: riskMedium),
+          //         const SizedBox(width: 12),
+          //         const Expanded(
+          //           child: Text(
+          //             'Riesgo alto de anegamiento en tu zona durante las próximas 2 horas.',
+          //             style: TextStyle(color: Color(0xFF78350F), fontSize: 13, fontWeight: FontWeight.bold),
+          //           ),
+          //         ),
+          //         const SizedBox(width: 8),
+          //         GestureDetector(
+          //           child: const Icon(Icons.close, size: 18, color: Color(0xFF92400E)),
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
           
-          // Filter Chips Outline
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 135,
-            left: 0,
-            right: 0,
-            child: SizedBox(
-              height: 40,
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                scrollDirection: Axis.horizontal,
-                children: [
-                  _buildFilterChip('Todos', icon: Icons.filter_list, isSelected: true),
-                  _buildFilterChip('Basura'),
-                  _buildFilterChip('Inundación'),
-                  _buildFilterChip('Maleza'),
-                  _buildFilterChip('Sedimento'),
-                ],
-              ),
-            ),
-          ),
+          // // Filter Chips Outline
+          // Positioned(
+          //   top: MediaQuery.of(context).padding.top + 135,
+          //   left: 0,
+          //   right: 0,
+          //   child: SizedBox(
+          //     height: 40,
+          //     child: ListView(
+          //       padding: const EdgeInsets.symmetric(horizontal: 16),
+          //       scrollDirection: Axis.horizontal,
+          //       children: [
+          //         _buildFilterChip('Todos', icon: Icons.filter_list, isSelected: true),
+          //         _buildFilterChip('Basura'),
+          //         _buildFilterChip('Inundación'),
+          //         _buildFilterChip('Maleza'),
+          //         _buildFilterChip('Sedimento'),
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
-          // Map UI Controls (Zoom, My Location)
-          Positioned(
-            right: 16,
-            top: MediaQuery.of(context).padding.top + 200,
-            child: Column(
-              children: [
-                _buildMapControlButton(Icons.add),
-                const SizedBox(height: 8),
-                _buildMapControlButton(Icons.remove),
-                const SizedBox(height: 16),
-                _buildMapControlButton(Icons.my_location, color: primaryColor),
-              ],
-            ),
-          ),
+          // // Map UI Controls (Zoom, My Location)
+          // Positioned(
+          //   right: 16,
+          //   top: MediaQuery.of(context).padding.top + 200,
+          //   child: Column(
+          //     children: [
+          //       _buildMapControlButton(Icons.add),
+          //       const SizedBox(height: 8),
+          //       _buildMapControlButton(Icons.remove),
+          //       const SizedBox(height: 16),
+          //       _buildMapControlButton(Icons.my_location, color: primaryColor),
+          //     ],
+          //   ),
+          // ),
 
-          // Floating Action Button
-          Positioned(
-            bottom: 150,
-            right: 16,
-            child: ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.add_circle),
-              label: const Text('Reportar problema'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: primaryColor,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-              ),
-            ),
-          ),
+          // // Floating Action Button
+          // Positioned(
+          //   bottom: 150,
+          //   right: 16,
+          //   child: ElevatedButton.icon(
+          //     onPressed: () {},
+          //     icon: const Icon(Icons.add_circle),
+          //     label: const Text('Reportar problema'),
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: primaryColor,
+          //       foregroundColor: Colors.white,
+          //       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          //       elevation: 8,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //       textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+          //     ),
+          //   ),
+          // ),
 
           // Bottom Sheet Segment
           Align(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center, //aqui es botom center
             child: Container(
-              height: 250,
+              // height: 250,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, -5),
-                  ),
-                ],
+                // borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.black.withOpacity(0.1),
+                //     blurRadius: 20,
+                //     offset: const Offset(0, -5),
+                //   ),
+                // ],
               ),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 12),
-                    Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
+                    // const SizedBox(height: 12),
+                    // Container(
+                    //   width: 40,
+                    //   height: 4,
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.grey.shade300,
+                    //     borderRadius: BorderRadius.circular(4),
+                    //   ),
+                    // ),
                     // Weather Section
                     Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -282,7 +284,76 @@ class _RiskMapScreenState extends State<RiskMapScreen> {
                     _buildCriticalZone('Canal Av. Beni (5to Anillo)', 'Obstrucción por basura detectada', Icons.water_damage, riskHigh, 'ALTO'),
                     _buildCriticalZone('Doble Vía La Guardia', 'Paso bajo nivel crítico', Icons.warning, riskHigh, 'ALTO'),
                     _buildCriticalZone('Plan 3000 (Zanjón)', 'Maleza y sedimentos', Icons.cleaning_services, riskMedium, 'MEDIO'),
-                    const SizedBox(height: 80),
+                    // const SizedBox(height: 80),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: Row(
+                        children: const [
+                          Text(
+                            'Mis puntos',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: textMain,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 0.0,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.blueGrey.shade50),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: primaryColor.withOpacity(0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.star,
+                                color: primaryColor,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            const Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  
+                                  Text(
+                                    'Reportes realizados',
+                                    style: TextStyle(
+                                      color: textSub,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Text(
+                              '0',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -416,11 +487,11 @@ class _RiskMapScreenState extends State<RiskMapScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(icon: Icons.map, label: 'Mapa', isActive: true, onTap: () {}),
+            _buildNavItem(icon: Icons.map, label: 'Home', isActive: true, onTap: () {}),
             _buildNavItem(icon: Icons.add_circle_outline, label: 'Reportar', isActive: false, onTap: () => context.push('/citizen/report')),
             _buildNavItem(icon: Icons.notifications_none, label: 'Alertas', isActive: false, onTap: () => context.push('/citizen/alerts')),
             _buildNavItem(icon: Icons.assignment_outlined, label: 'Reportes', isActive: false, onTap: () => context.push('/citizen/my-reports')),
-            _buildNavItem(icon: Icons.person_outline, label: 'Perfil', isActive: false, onTap: () {}),
+            _buildNavItem(icon: Icons.person_outline, label: 'Perfil', isActive: false),
           ],
         ),
       ),

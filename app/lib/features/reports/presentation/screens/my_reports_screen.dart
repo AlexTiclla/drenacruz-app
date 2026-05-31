@@ -82,7 +82,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
                   date: 'Hoy, 10:45 AM',
                   description: 'Canal obstruido con mucha basura plástica. El agua ya está llegando al nivel de la calle y empezó a llover fuerte.',
                   riskLevel: 'Riesgo alto',
-                  imageUrl: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                  imageUrl: 'https://www.shutterstock.com/image-photo/demak-indonesia-august-29-2025-600nw-2687904749.jpg',
                   supports: 3,
                 ),
                 const SizedBox(height: 16),
@@ -92,7 +92,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
                   date: '12 Oct, 2026',
                   description: 'Sumidero tapado por tierra y hojas. Se inunda esta esquina cada vez que llueve más de media hora.',
                   riskLevel: 'Riesgo medio',
-                  imageUrl: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                  imageUrl: 'https://construmarket.com.bo/wp-content/uploads/2023/06/CANAL-1-ok-scaled.jpg',
                   supports: 12,
                 ),
               ],
@@ -315,7 +315,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(icon: Icons.map_outlined, label: 'Mapa', isActive: false, onTap: () => context.go('/citizen/map')),
+            _buildNavItem(icon: Icons.map_outlined, label: 'Home', isActive: false, onTap: () => context.go('/citizen/map')),
             _buildNavItem(icon: Icons.add_circle_outline, label: 'Reportar', isActive: false, onTap: () => context.push('/citizen/report')),
             _buildNavItem(icon: Icons.notifications_none, label: 'Alertas', isActive: false, onTap: () => context.push('/citizen/alerts')),
             _buildNavItem(icon: Icons.assessment, label: 'Reportes', isActive: true, onTap: () => context.push('/citizen/my-reports')),

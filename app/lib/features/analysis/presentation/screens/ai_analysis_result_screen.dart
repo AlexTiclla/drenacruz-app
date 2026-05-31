@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class AiAnalysisResultScreen extends StatefulWidget {
@@ -17,7 +18,12 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
   static const Color nightColor = Color(0xFF0F172A);
   static const Color slateColor = Color(0xFF64748B);
 
-  String _selectedProblem = 'Canal obstruido';
+  static const CameraPosition _santaCruz = CameraPosition(
+    target: LatLng(-17.695328, -63.151325),
+    zoom: 14.0,
+  );
+
+  String _selectedProblem = 'Calle inundada';
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +95,7 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Image.network(
-                      'https://lh3.googleusercontent.com/aida/ADBb0ujFK18f7_wIDT8jtN4j_TFXDHMS5m5mGuMJtUmllq1qDeoFfRlEKyr4p_JbVatsxwdVCL3YOiEokO9a6_At6nUMOC3xILb2i03OuOtDxdjMdyAop-4D9w2xUOKaF3STtWmgFvbnc04G2BGnGFf3GiQmUqBbRpjWqJY05TZC0rcQmAqc8TkZuOfg8JDq--8gyMH2nD1n77q9B57RZk1Qtpdk0aS6BcvFTVRhBS-oF77cVcLgnWs17LcbGOT5',
+                      'http://cd1.eju.tv/wp-content/uploads/2018/01/5a4b9636a72f2.jpg',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(
                         color: Colors.grey.shade300,
@@ -165,10 +171,14 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: const [
                           Icon(Icons.auto_awesome, color: primaryColor),
                           SizedBox(width: 8),
@@ -183,6 +193,7 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                           border: Border.all(color: const Color(0xFFFEE2E2)),
                         ),
                         child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: const [
                             Icon(Icons.warning, color: riskHigh, size: 16),
                             SizedBox(width: 4),
@@ -210,13 +221,15 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                           children: [
                             const Text('TIPO DETECTADO', style: TextStyle(fontSize: 10, color: slateColor, fontWeight: FontWeight.bold, letterSpacing: 1.0)),
                             const SizedBox(height: 4),
-                            const Text('Canal obstruido', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: nightColor)),
+                            const Text('Calle inundada', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: nightColor)),
                             const SizedBox(height: 20),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
-                                Text('OBSTRUCCIÓN ESTIMADA', style: TextStyle(fontSize: 10, color: slateColor, fontWeight: FontWeight.bold, letterSpacing: 0.5)),
-                                Text('82%', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: riskHigh)),
+                                Expanded(
+                                  child: Text('OBSTRUCCIÓN ESTIMADA', style: TextStyle(fontSize: 10, color: slateColor, fontWeight: FontWeight.bold, letterSpacing: 0.5)),
+                                ),
+                                SizedBox(width: 4),
+                                Text('100%', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: riskHigh)),
                               ],
                             ),
                             const SizedBox(height: 8),
@@ -239,7 +252,7 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 24),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,9 +263,9 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                               spacing: 8,
                               runSpacing: 8,
                               children: [
-                                _buildChip('Basura plástica'),
-                                _buildChip('Ramas'),
-                                _buildChip('Sedimento'),
+                                _buildChip('Auto'),
+                                _buildChip('Agua estancada'),
+                                _buildChip('Tunel'),
                               ],
                             ),
                             const SizedBox(height: 20),
@@ -262,7 +275,7 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                               children: const [
                                 Icon(Icons.water_drop, color: secondaryColor, size: 20),
                                 SizedBox(width: 4),
-                                Text('Medio', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: nightColor)),
+                                Text('Muy alto', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: nightColor)),
                               ],
                             ),
                           ],
@@ -284,7 +297,7 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                         SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'La IA detectó acumulación de residuos en el flujo del canal.',
+                            'La IA detectó agua estancada y un auto inundado en un túnel.',
                             style: TextStyle(color: primaryColor, fontSize: 13, fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -346,6 +359,7 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                           }
                         },
                         items: <String>[
+                          'Calle inundada',
                           'Canal obstruido',
                           'Desborde de aguas negras',
                           'Infraestructura dañada',
@@ -395,9 +409,13 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
                         child: SizedBox(
                           height: 160,
                           width: double.infinity,
-                          child: Image.network(
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuCxRwiBgZpgjTYvFfLM2hHQTgHt3U0-HQEr-PyUC6--HU1HZxOOh5QYS3Cjdkm0uC4Kf1-SsSxUw9_zFRPn2moymQW9NDKNcqtwINiEw8xt3FhrqiEY2jxTaZEbskfZHQjLw0fEiUIXEYCSoFQUz0L0lHIRYph-vxeCwiVyMb0qFln8ewtwodTQXE0N_DIVksXyx1_KnFg6L3q0l7IamBUAbor24vjQBtpIjK4h0dnvjm_sysJcMaMLLlkcer47DZtOyod7xrxbRIqR',
-                            fit: BoxFit.cover,
+                          child: IgnorePointer(
+                            child: GoogleMap(
+                              initialCameraPosition: _santaCruz,
+                              myLocationEnabled: true,
+                              myLocationButtonEnabled: false,
+                              zoomControlsEnabled: false,
+                            ),
                           ),
                         ),
                       ),
@@ -447,8 +465,9 @@ class _AiAnalysisResultScreenState extends State<AiAnalysisResultScreen> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisSize: MainAxisSize.min,
                 children: const [
-                  Text('Confirmar y enviar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Flexible(child: Text('Confirmar y enviar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis)),
                   SizedBox(width: 8),
                   Icon(Icons.send, size: 20),
                 ],

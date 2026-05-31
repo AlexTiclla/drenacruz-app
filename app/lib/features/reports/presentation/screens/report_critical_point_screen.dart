@@ -16,6 +16,7 @@ class _ReportCriticalPointScreenState extends State<ReportCriticalPointScreen> {
   static const Color textSub = Color(0xFF64748B);
 
   int? _selectedIssueIndex;
+  String? _selectedLocationMode;
 
   final List<Map<String, dynamic>> _issueTypes = [
     {'icon': Icons.delete_outline, 'label': 'Canal con basura'},
@@ -183,7 +184,7 @@ class _ReportCriticalPointScreenState extends State<ReportCriticalPointScreen> {
                     );
                   },
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 12),
 
                 // Location Section
                 const Text(
@@ -196,28 +197,54 @@ class _ReportCriticalPointScreenState extends State<ReportCriticalPointScreen> {
                 ),
                 const SizedBox(height: 12),
                 OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.my_location, color: secondaryColor),
-                  label: const Text('Usar mi ubicación actual'),
+                  onPressed: () {
+                    setState(() {
+                      _selectedLocationMode = 'current';
+                    });
+                  },
+                  icon: Icon(
+                    Icons.my_location,
+                    color: _selectedLocationMode == 'current' ? Colors.white : secondaryColor,
+                  ),
+                  label: Text(
+                    'Usar mi ubicación actual',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: _selectedLocationMode == 'current' ? Colors.white : textMain,
+                    ),
+                  ),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: textMain,
-                    backgroundColor: Colors.white,
+                    foregroundColor: _selectedLocationMode == 'current' ? Colors.white : textMain,
+                    backgroundColor: _selectedLocationMode == 'current' ? primaryColor : Colors.white,
                     minimumSize: const Size(double.infinity, 52),
-                    side: BorderSide(color: Colors.blueGrey.shade200),
+                    side: BorderSide(color: _selectedLocationMode == 'current' ? primaryColor : Colors.blueGrey.shade200),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     textStyle: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
                 const SizedBox(height: 12),
                 OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.map, color: secondaryColor),
-                  label: const Text('Elegir en mapa'),
+                  onPressed: () {
+                    setState(() {
+                      _selectedLocationMode = 'map';
+                    });
+                  },
+                  icon: Icon(
+                    Icons.map,
+                    color: _selectedLocationMode == 'map' ? Colors.white : secondaryColor,
+                  ),
+                  label: Text(
+                    'Elegir en mapa',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: _selectedLocationMode == 'map' ? Colors.white : textMain,
+                    ),
+                  ),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: textMain,
-                    backgroundColor: Colors.white,
+                    foregroundColor: _selectedLocationMode == 'map' ? Colors.white : textMain,
+                    backgroundColor: _selectedLocationMode == 'map' ? primaryColor : Colors.white,
                     minimumSize: const Size(double.infinity, 52),
-                    side: BorderSide(color: Colors.blueGrey.shade200),
+                    side: BorderSide(color: _selectedLocationMode == 'map' ? primaryColor : Colors.blueGrey.shade200),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     textStyle: const TextStyle(fontWeight: FontWeight.w600),
                   ),
@@ -236,7 +263,7 @@ class _ReportCriticalPointScreenState extends State<ReportCriticalPointScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 12),
 
                 // Optional Comments
                 const Text(
@@ -260,56 +287,38 @@ class _ReportCriticalPointScreenState extends State<ReportCriticalPointScreen> {
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: primaryColor)),
                   ),
                 ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _selectedIssueIndex != null
+                      ? () => context.push('/citizen/report/photo')
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    disabledBackgroundColor: primaryColor.withOpacity(0.5),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 56),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: _selectedIssueIndex != null ? 4 : 0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text('Continuar con foto', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      SizedBox(width: 8),
+                      Icon(Icons.arrow_forward, size: 20),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () => context.pop(),
+                  style: TextButton.styleFrom(
+                    foregroundColor: textSub,
+                    minimumSize: const Size(double.infinity, 40),
+                  ),
+                  child: const Text('Cancelar', style: TextStyle(fontWeight: FontWeight.w600)),
+                ),
               ],
-            ),
-          ),
-          
-          // Fixed Action Bottom Section
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.95),
-                border: Border(top: BorderSide(color: Colors.blueGrey.shade100)),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ElevatedButton(
-                    onPressed: _selectedIssueIndex != null
-                        ? () => context.push('/citizen/report/photo')
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      disabledBackgroundColor: primaryColor.withOpacity(0.5),
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(double.infinity, 56),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      elevation: _selectedIssueIndex != null ? 4 : 0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text('Continuar con foto', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                        SizedBox(width: 8),
-                        Icon(Icons.arrow_forward, size: 20),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: () => context.pop(),
-                    style: TextButton.styleFrom(
-                      foregroundColor: textSub,
-                      minimumSize: const Size(double.infinity, 40),
-                    ),
-                    child: const Text('Cancelar', style: TextStyle(fontWeight: FontWeight.w600)),
-                  ),
-                ],
-              ),
             ),
           ),
         ],
