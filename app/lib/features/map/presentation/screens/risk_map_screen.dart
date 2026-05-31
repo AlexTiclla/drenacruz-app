@@ -491,6 +491,7 @@ class _RiskMapScreenState extends State<RiskMapScreen> {
             _buildNavItem(icon: Icons.add_circle_outline, label: 'Reportar', isActive: false, onTap: () => context.push('/citizen/report')),
             _buildNavItem(icon: Icons.notifications_none, label: 'Alertas', isActive: false, onTap: () => context.push('/citizen/alerts')),
             _buildNavItem(icon: Icons.assignment_outlined, label: 'Reportes', isActive: false, onTap: () => context.push('/citizen/my-reports')),
+            _buildNavItem(icon: Icons.alt_route, label: 'Rutas', isActive: false, onTap: () => context.push('/citizen/safe-route')),
             _buildNavItem(icon: Icons.person_outline, label: 'Perfil', isActive: false),
           ],
         ),

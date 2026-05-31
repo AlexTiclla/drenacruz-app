@@ -10,6 +10,7 @@ import '../../features/reports/presentation/screens/report_confirmation_screen.d
 import '../../features/reports/presentation/screens/my_reports_screen.dart';
 import '../../features/reports/presentation/screens/report_detail_screen.dart';
 import '../../features/analysis/presentation/screens/ai_analysis_result_screen.dart';
+import '../../features/map/presentation/screens/safe_route_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/login',
@@ -25,6 +26,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/citizen/alerts',
       builder: (context, state) => const NearbyAlertsScreen(),
+    ),
+    GoRoute(
+      path: '/citizen/safe-route',
+      builder: (context, state) => const SafeRouteScreen(),
     ),
     GoRoute(
       path: '/citizen/report',
