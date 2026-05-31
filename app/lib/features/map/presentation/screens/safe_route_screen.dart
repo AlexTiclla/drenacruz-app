@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class SafeRouteScreen extends StatefulWidget {
   const SafeRouteScreen({super.key});
@@ -10,67 +12,91 @@ class SafeRouteScreen extends StatefulWidget {
 
 class _SafeRouteScreenState extends State<SafeRouteScreen> {
   static const Color primaryColor = Color(0xFF0B5CAD);
-  static const Color secondaryColor = Color(0xFF00A6A6);
   static const Color textMain = Color(0xFF0F172A);
   static const Color textSub = Color(0xFF64748B);
   static const Color riskHigh = Color(0xFFEF4444);
-  static const Color riskMedium = Color(0xFFF59E0B);
   static const Color safeGreen = Color(0xFF10B981);
 
   bool _routeCalculated = false;
 
+  final MapController _mapController = MapController();
+
+  // Coordenadas de ejemplo en Santa Cruz de la Sierra
+  final LatLng _startPoint = const LatLng(-17.7800, -63.1800);
+  final LatLng _floodedPoint = const LatLng(-17.7850, -63.1820);
+  final LatLng _endPoint = const LatLng(-17.7950, -63.1850);
+
+  // Simulación de los puntos que formarían la ruta esquivando la inundación
+  final List<LatLng> _routePoints = [
+    const LatLng(-17.7800, -63.1800), // Inicio
+    const LatLng(-17.7820, -63.1760), // Desvío a la izquierda
+    const LatLng(-17.7880, -63.1760), // Bajando por otra calle segura
+    const LatLng(-17.7920, -63.1810), // Acercándose al objetivo
+    const LatLng(-17.7950, -63.1850), // Destino final
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100, // Simulando el fondo del mapa
       body: Stack(
         children: [
-          // Capa del Mapa (Simulado para demostración)
+          // Capa del Mapa (Real OpenStreetMap)
           Positioned.fill(
-            child: Container(
-              color: const Color(0xFFE5E5E5),
-              child: Stack(
-                children: [
-                  // Aquí iría el widget de mapa (ej. flutter_map o GoogleMap)
-                  // Mocks de rutas y puntos
-                  if (_routeCalculated) ...[
-                    // Marcador de inicio
-                    Positioned(
-                      bottom: 200,
-                      left: 100,
-                      child: Icon(Icons.location_history, color: primaryColor, size: 40),
-                    ),
-                    // Marcador de zona inundada
-                    Positioned(
-                      bottom: 350,
-                      left: 180,
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: riskHigh.withOpacity(0.3),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(Icons.water_drop, color: riskHigh, size: 40),
-                      ),
-                    ),
-                    // Marcador de destino
-                    Positioned(
-                      bottom: 500,
-                      left: 200,
-                      child: Icon(Icons.location_on, color: safeGreen, size: 40),
-                    ),
-                    // Línea de ruta segura (simulada)
-                    Positioned(
-                      bottom: 220,
-                      left: 120,
-                      child: CustomPaint(
-                        size: const Size(100, 300),
-                        painter: _RoutePainter(),
-                      ),
-                    ),
-                  ]
-                ],
+            child: FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(
+                initialCenter: _startPoint,
+                initialZoom: 14.5,
               ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.drenacruz.app',
+                ),
+                if (_routeCalculated)
+                  PolylineLayer(
+                    polylines: [
+                      Polyline(
+                        points: _routePoints,
+                        color: safeGreen,
+                        strokeWidth: 5.0,
+                      ),
+                    ],
+                  ),
+                if (_routeCalculated)
+                  MarkerLayer(
+                    markers: [
+                      // Inicio
+                      Marker(
+                        point: _startPoint,
+                        width: 40,
+                        height: 40,
+                        child: const Icon(Icons.my_location, color: primaryColor, size: 30),
+                      ),
+                      // Zona Inundada (Riesgo Alto)
+                      Marker(
+                        point: _floodedPoint,
+                        width: 80,
+                        height: 80,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: riskHigh.withOpacity(0.3),
+                            shape: BoxShape.circle,
+                            border: Border.all(color: riskHigh, width: 1),
+                          ),
+                          child: const Icon(Icons.water_drop, color: riskHigh, size: 30),
+                        ),
+                      ),
+                      // Destino
+                      Marker(
+                        point: _endPoint,
+                        width: 40,
+                        height: 40,
+                        child: const Icon(Icons.location_on, color: safeGreen, size: 40),
+                      ),
+                    ],
+                  ),
+              ],
             ),
           ),
 
@@ -102,7 +128,7 @@ class _SafeRouteScreenState extends State<SafeRouteScreen> {
                           ),
                         ),
                         Text(
-                          'Evitando zonas de riesgo',
+                          'Evitando zonas de riesgo (OpenStreetMap)',
                           style: TextStyle(color: textSub, fontSize: 10, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -179,6 +205,7 @@ class _SafeRouteScreenState extends State<SafeRouteScreen> {
                           onFieldSubmitted: (value) {
                             setState(() {
                               _routeCalculated = true;
+                              _mapController.move(_startPoint, 13.5); // Aleja el zoom para ver la ruta
                             });
                           },
                         ),
@@ -189,6 +216,7 @@ class _SafeRouteScreenState extends State<SafeRouteScreen> {
                           onPressed: () {
                             setState(() {
                               _routeCalculated = true;
+                              _mapController.move(_startPoint, 13.5);
                             });
                           },
                         )
@@ -198,6 +226,7 @@ class _SafeRouteScreenState extends State<SafeRouteScreen> {
                           onPressed: () {
                             setState(() {
                               _routeCalculated = false;
+                              _mapController.move(_startPoint, 14.5);
                             });
                           },
                         ),
@@ -217,12 +246,12 @@ class _SafeRouteScreenState extends State<SafeRouteScreen> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFECFDF5), // emerald-50
+                  color: const Color(0xFFECFDF5),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFA7F3D0)), // emerald-200
+                  border: Border.all(color: const Color(0xFFA7F3D0)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withOpacity(0.1),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -235,11 +264,10 @@ class _SafeRouteScreenState extends State<SafeRouteScreen> {
                     const SizedBox(width: 12),
                     const Expanded(
                       child: Text(
-                        'Ruta óptima calculada. Se ha evitado 1 zona de inundación activa en el 4to Anillo.',
+                        'Ruta óptima calculada. Se ha evitado 1 zona de inundación activa en tu trayecto.',
                         style: TextStyle(color: Color(0xFF065F46), fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const SizedBox(width: 8),
                   ],
                 ),
               ),
@@ -330,26 +358,4 @@ class _SafeRouteScreenState extends State<SafeRouteScreen> {
       ),
     );
   }
-}
-
-// Pintor simulado para la línea de ruta
-class _RoutePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = const Color(0xFF10B981) // safeGreen
-      ..strokeWidth = 6
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    final path = Path();
-    path.moveTo(0, 0);
-    path.quadraticBezierTo(50, 100, -50, 150);
-    path.quadraticBezierTo(-100, 200, 80, 280);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
